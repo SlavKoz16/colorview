@@ -1,5 +1,6 @@
 import 'package:colorview/data/ad_data_repository.dart';
 import 'package:colorview/model/anounce_model.dart';
+import 'package:colorview/presentation/events/create_event_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,9 @@ class _EventViewState extends State<EventView> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateEventView(selectedArea: '')));
+        }, icon: Icon(Icons.add))],
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text("Анонсы", style: TextStyle(fontSize: 35,),),
@@ -38,6 +42,10 @@ class _EventViewState extends State<EventView> {
           children: List.generate(controller.anounces.length, (index) {
             AnounceModel anounceModel = controller.anounces[index];
             return Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(8)
+              ),
               width: MediaQuery.of(context).size.width -32,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +62,7 @@ class _EventViewState extends State<EventView> {
   @override
   void initState() {
     final controller = Provider.of<AdDataRepository>(context,listen: false);
-    controller.getActiveAdsByRegion();
+    controller.getAnounonses();
     super.initState();
   }
 }

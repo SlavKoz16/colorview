@@ -77,7 +77,7 @@ class AdDataRepository with ChangeNotifier implements AdDomainRepository {
 
   @override
   Future<void> createAnounce(AnounceModel anounce) async {
-    await dio.post('${ServerRouter.hostV2}/announces/add',
+    final response =await dio.post('${ServerRouter.hostV2}/announces/add',
     data: {
       'name': anounce.name, //заполняем на экране
       'sportObjectID': anounce.sportObjectId,//выбираем клуб из спиика
@@ -88,7 +88,10 @@ class AdDataRepository with ChangeNotifier implements AdDomainRepository {
       'orgContact': anounce.orgContact,  // заполяем на экране
       'description': anounce.description, // заполяем на экране
       'url': anounce.url, // заполяем на экране
+      'publish': anounce.publish,
+      'isArchive': false
     });
+    print(response.data);
   }
 
   @override

@@ -16,32 +16,28 @@ FocusNode _focusNode = FocusNode();
 class CreateEventView extends StatefulWidget {
   final String selectedArea;
 
-  const CreateEventView({super.key, required
-  this.selectedArea});
+  const CreateEventView({super.key, required this.selectedArea});
 
   @override
-  _CreateEventViewState createState() =>
-      _CreateEventViewState();
+  _CreateEventViewState createState() => _CreateEventViewState();
 }
 
-class _CreateEventViewState extends
-State<CreateEventView>{
+class _CreateEventViewState extends State<CreateEventView> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    _orgContactController.text=widget.selectedArea;
+    _orgContactController.text = widget.selectedArea;
   }
 
-  void _navigateToAreaSelection()async{
+  void _navigateToAreaSelection() async {
     final selectedArea = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context)=>AreaView()),
+      MaterialPageRoute(builder: (context) => AreaView()),
     );
-    if(selectedArea!=null&&selectedArea is String){
-      _orgContactController.text=selectedArea;
+    if (selectedArea != null && selectedArea is String) {
+      _orgContactController.text = selectedArea;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,93 +46,61 @@ State<CreateEventView>{
       onTap: () {
         _focusNode.unfocus();
       },
-      child: SingleChildScrollView(
-        child: Scaffold(
-          appBar: AppBar(),
-          body: SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: SafeArea(
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextFieldWidget(controller: _nameController, text: 'Название', password: false),
-                  const SizedBox(height: 8,),
-                  CustomTextFieldWidget(controller: _priceController, text: 'Стоимость', password: false),
-                  const SizedBox(height: 8,),
+                  CustomTextFieldWidget(
+                      controller: _nameController,
+                      text: 'Название',
+                      password: false),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  CustomTextFieldWidget(
+                      controller: _priceController,
+                      text: 'Стоимость',
+                      password: false),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   GestureDetector(
-                    onTap: _navigateToAreaSelection,
-                    child: Container(
-                      height: 54,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        border: Border.all(color:Colors.grey),
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.transparent,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                                child: Text(
-                                  _orgContactController.text.isEmpty ?'Выбор площадки': _orgContactController.text,
-                                  style: const TextStyle(color: Colors.grey,fontSize: 15),
-                                ),),
-                            const Icon(Icons.arrow_drop_down),
-                          ],
+                      onTap: _navigateToAreaSelection,
+                      child: Container(
+                        height: 54,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.transparent,
                         ),
-                      ),
-                    )
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  _orgContactController.text.isEmpty
+                                      ? 'Выбор площадки'
+                                      : _orgContactController.text,
+                                  style: const TextStyle(
+                                      color: Colors.grey, fontSize: 15),
+                                ),
+                              ),
+                              const Icon(Icons.arrow_drop_down),
+                            ],
+                          ),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 8,
                   ),
-                  const SizedBox(height: 8,),
-        
-            GestureDetector(
-              onTap: () {
-                var now = DateTime.now();
-                DatePicker.showDatePicker(
-                  context,
-                  minuteDivider: 30,
-                  pickerMode: DateTimePickerMode.date,
-                  initialDateTime: DateTime(
-                      now.year, now.month, now.day, now.hour, 0, 0),
-                  minDateTime: DateTime(
-                      now.year, now.month, now.day, now.hour, 0, 0),
-                  maxDateTime:
-                  DateTime.now().add(const Duration(days: 30)),
-                  dateFormat: "dd MMMM yyyy HH mm",
-                  onChange: (dateTime, selectedIndex) {
-                    controller.changeDateStart(dateTime
-                       
-                        .toIso8601String());
-                  },
-                  onConfirm: (dateTime, selectedIndex) {
-                    controller.changeDateStart(dateTime.toIso8601String());
-                  },
-                );
-              },
-              child: Container(
-                height: 44,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.black)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      controller.dateStart != ''
-                          ? '${controller.dateStart.toString().substring(0, 10)} ${controller.dateStart .toString().substring(11, 16)}'
-                          : 'Дата и время начала',
-        
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        SizedBox(height: 8,),
                   GestureDetector(
                     onTap: () {
                       var now = DateTime.now();
@@ -149,17 +113,15 @@ State<CreateEventView>{
                         minDateTime: DateTime(
                             now.year, now.month, now.day, now.hour, 0, 0),
                         maxDateTime:
-                        DateTime.now().add(const Duration(days: 30)),
+                            DateTime.now().add(const Duration(days: 30)),
                         dateFormat: "dd MMMM yyyy HH mm",
                         onChange: (dateTime, selectedIndex) {
-                          controller.changeDateEnd(dateTime
-        
-                              .toIso8601String());
+                          controller
+                              .changeDateStart(dateTime.toIso8601String());
                         },
                         onConfirm: (dateTime, selectedIndex) {
-                          controller.changeDateEnd(dateTime
-        
-                              .toIso8601String());
+                          controller
+                              .changeDateStart(dateTime.toIso8601String());
                         },
                       );
                     },
@@ -168,28 +130,76 @@ State<CreateEventView>{
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.black)
+                          border: Border.all(color: Colors.black)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            controller.dateStart != ''
+                                ? '${controller.dateStart.toString().substring(0, 10)} ${controller.dateStart.toString().substring(11, 16)}'
+                                : 'Дата и время начала',
+                          ),
+                        ),
                       ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      var now = DateTime.now();
+                      DatePicker.showDatePicker(
+                        context,
+                        minuteDivider: 30,
+                        pickerMode: DateTimePickerMode.date,
+                        initialDateTime: DateTime(
+                            now.year, now.month, now.day, now.hour, 0, 0),
+                        minDateTime: DateTime(
+                            now.year, now.month, now.day, now.hour, 0, 0),
+                        maxDateTime:
+                            DateTime.now().add(const Duration(days: 30)),
+                        dateFormat: "dd MMMM yyyy HH mm",
+                        onChange: (dateTime, selectedIndex) {
+                          controller.changeDateEnd(dateTime.toIso8601String());
+                        },
+                        onConfirm: (dateTime, selectedIndex) {
+                          controller.changeDateEnd(dateTime.toIso8601String());
+                        },
+                      );
+                    },
+                    child: Container(
+                      height: 44,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.black)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             controller.dateEnd != ''
-                                ? '${controller.dateEnd.toString().substring(0, 10)} ${controller.dateEnd .toString().substring(11, 16)}'
+                                ? '${controller.dateEnd.toString().substring(0, 10)} ${controller.dateEnd.toString().substring(11, 16)}'
                                 : 'Дата и время начала',
-        
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 8,),
-                  CustomTextFieldWidget(controller: _urlController, text: 'Название', password: false),
-                  const SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  CustomTextFieldWidget(
+                      controller: _urlController,
+                      text: 'Название',
+                      password: false),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   TextField(
-                    onChanged: (_) {
-                    },
+                    onChanged: (_) {},
                     focusNode: _focusNode,
                     textCapitalization: TextCapitalization.sentences,
                     maxLines: 10,
@@ -219,10 +229,25 @@ State<CreateEventView>{
                       ),
                     ),
                   ),
-                  const SizedBox(height: 18,),
+                  const SizedBox(
+                    height: 18,
+                  ),
                   GestureDetector(
-                    onTap: (){
-                      controller.createAnounce(AnounceModel(createdAt: DateTime.now(), name: _nameController.text, id: null, price: _priceController.text, start: controller.dateStart, description: _descriptionController.text, end: controller.dateEnd, isArchive: false, orgContact: _orgContactController.text, publish: true, senderId: null, sportObjectId: null, url: _urlController.text));
+                    onTap: () {
+                      controller.createAnounce(AnounceModel(
+                          createdAt: DateTime.now(),
+                          name: _nameController.text,
+                          id: null,
+                          price: _priceController.text,
+                          start: controller.dateStart,
+                          description: _descriptionController.text,
+                          end: controller.dateEnd,
+                          isArchive: false,
+                          orgContact: _orgContactController.text,
+                          publish: true,
+                          senderId: '6644ab73d43ce8386de63a70',
+                          sportObjectId: '646a4c505e3895f45a56670d',
+                          url: _urlController.text));
                     },
                     child: Container(
                       height: 52,
