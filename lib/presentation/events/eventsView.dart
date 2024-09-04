@@ -3,6 +3,7 @@ import 'package:colorview/model/anounce_model.dart';
 import 'package:colorview/presentation/events/create_event_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /*void main() {
   runApp(SettingsPanel());
@@ -30,8 +31,8 @@ class _EventViewState extends State<EventView> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [IconButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateEventView(selectedArea: '')));
-        }, icon: Icon(Icons.add))],
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const CreateEventView(selectedArea: '')));
+        }, icon: const Icon(Icons.add))],
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text("Анонсы", style: TextStyle(fontSize: 35,),),
@@ -41,17 +42,32 @@ class _EventViewState extends State<EventView> {
         child: Column(
           children: List.generate(controller.anounces.length, (index) {
             AnounceModel anounceModel = controller.anounces[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(8)
-              ),
-              width: MediaQuery.of(context).size.width -32,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(anounceModel.name),
-                ],
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3.5),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(8)
+                ),
+                width: MediaQuery.of(context).size.width -32,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(anounceModel.name,style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),),
+                      Text(anounceModel.description),
+                      Text('Дата: ${anounceModel.start.toString().substring(0,10)}'),
+                      Text('C ${anounceModel.start.toString().substring(11,16)} до ${anounceModel.end.toString().substring(11,16)}'),
+                      GestureDetector(child: Text(anounceModel.url),onTap: (){
+                        launchUrl(Uri.parse(anounceModel.url));
+                      },)
+                    ],
+                  ),
+                ),
               ),
             );
           }),
