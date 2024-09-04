@@ -101,4 +101,22 @@ class AdDataRepository with ChangeNotifier implements AdDomainRepository {
     print(anounces[0].url);
     notifyListeners();
   }
+
+  @override
+  String dateEnd='';
+
+  @override
+  String dateStart='';
+
+  @override
+  void changeDateEnd(date) {
+    dateEnd =date;
+    notifyListeners();
+  }
+
+  @override
+  void changeDateStart(date) {
+    dateStart = date;
+    notifyListeners();
+  }
 }
