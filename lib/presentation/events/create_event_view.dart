@@ -1,6 +1,7 @@
 import 'package:colorview/data/ad_data_repository.dart';
 import 'package:colorview/model/anounce_model.dart';
 import 'package:colorview/presentation/events/area_events.dart';
+import 'package:colorview/presentation/events/search_sport_object.dart';
 import 'package:colorview/presentation/widgets/custom_textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
@@ -32,7 +33,7 @@ class _CreateEventViewState extends State<CreateEventView> {
   void _navigateToAreaSelection() async {
     final selectedArea = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AreaView()),
+      MaterialPageRoute(builder: (context) => SearchSportObject()),
     );
     if (selectedArea != null && selectedArea is String) {
       _orgContactController.text = selectedArea;

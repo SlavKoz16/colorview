@@ -122,4 +122,14 @@ class AdDataRepository with ChangeNotifier implements AdDomainRepository {
     dateStart = date;
     notifyListeners();
   }
+
+  @override
+  List sportObject=[];
+
+  @override
+  Future<void> getObjects(str) async{
+    final response = await dio.get('http://95.174.94.152:3000/api/v1/sportObjects/search/$str');
+    sportObject = response.data;
+    notifyListeners();
+  }
 }

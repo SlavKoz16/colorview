@@ -20,4 +20,6 @@ abstract interface class AdDomainRepository {
   List<AnounceModel> anounces = [];
   bool active = false;
   void changeActive(bool type);
+  List sportObject = [];
+  Future<void> getObjects(str);
 }
