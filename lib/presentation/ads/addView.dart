@@ -4,6 +4,7 @@ import 'package:colorview/presentation/ads/photoView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class AdminView extends StatefulWidget {
   @override
   _addViewState createState() => _addViewState();
@@ -61,8 +62,14 @@ class _addViewState extends State<AdminView> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ArchiveView()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ArchivedAdsView(
+                          archivedAds: adDataRepository.getArchivedAds(),
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 32,
@@ -151,7 +158,17 @@ class AdCard extends StatelessWidget {
                     width: 130,
                     height: 24,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        adDataRepository.archiveAd;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                          builder: (context) => ArchivedAdsView(
+                          archivedAds: adDataRepository.getArchivedAds(),
+                          ),
+                          ),
+                      );
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

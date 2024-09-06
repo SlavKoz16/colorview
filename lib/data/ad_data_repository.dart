@@ -132,4 +132,20 @@ class AdDataRepository with ChangeNotifier implements AdDomainRepository {
     sportObject = response.data;
     notifyListeners();
   }
+
+  @override
+  List<AnounceModel> archivedAnounces = [];
+
+  @override
+  void archiveAd(AnounceModel anounce) {
+    anounces.remove(anounce);
+    archivedAnounces.add(anounce);
+    notifyListeners();
+  }
+
+  @override
+  List<AnounceModel> getArchivedAds() {
+    return archivedAnounces;
+  }
 }
+
