@@ -24,9 +24,15 @@ class EventView extends StatefulWidget{
 
 class _EventViewState extends State<EventView> {
   @override
+  voidinitState(){
+    super.initState();
+    final controller = Provider.of<AdDataRepository>(context,
+    listen:false);
+    controller.getAnounonses();
+  }
+
   Widget build(BuildContext context) {
     final controller = Provider.of<AdDataRepository>(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,8 +45,9 @@ class _EventViewState extends State<EventView> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: List.generate(controller.anounces.length, (index) {
+        child: ListView.builder(
+          itemCount: controller.anounces.length,
+          itemBuilder: (context, index) {
             AnounceModel anounceModel = controller.anounces[index];
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 3.5),
@@ -62,7 +69,7 @@ class _EventViewState extends State<EventView> {
                       Text(anounceModel.description),
                       Text('Дата: ${anounceModel.start.toString().substring(0,10)}'),
                       Text('C ${anounceModel.start.toString().substring(11,16)} до ${anounceModel.end.toString().substring(11,16)}'),
-                      GestureDetector(child: Text(anounceModel.url),onTap: (){
+                      GestureDetector(child: Text(anounceModel.url,style: TextStyle(color: Colors.blue),),onTap: (){
                         launchUrl(Uri.parse(anounceModel.url));
                       },)
                     ],
@@ -72,8 +79,7 @@ class _EventViewState extends State<EventView> {
             );
           }),
         ),
-      ),
-    );
+      );
   }
   @override
   void initState() {

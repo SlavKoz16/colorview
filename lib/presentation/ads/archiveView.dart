@@ -1,15 +1,15 @@
 import 'package:colorview/data/ad_data_repository.dart';
-import 'package:colorview/presentation/ads/archiveView.dart';
+import 'package:colorview/presentation/ads/addView.dart';
 import 'package:colorview/presentation/ads/photoView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AdminView extends StatefulWidget {
+class ArchiveView extends StatefulWidget {
   @override
-  _addViewState createState() => _addViewState();
+  _archiveViewState createState() => _archiveViewState();
 }
 
-class _addViewState extends State<AdminView> {
+class _archiveViewState extends State<ArchiveView> {
   @override
   Widget build(BuildContext context) {
     final adDataRepository = Provider.of<AdDataRepository>(context);
@@ -45,7 +45,8 @@ class _addViewState extends State<AdminView> {
               children: <Widget>[
                 GestureDetector(
                   onTap: (){
-                    adDataRepository.changeActive(true);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AdminView()));
                   },
                   child: Container(
                     height: 32,
@@ -61,8 +62,7 @@ class _addViewState extends State<AdminView> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ArchiveView()));
+                    adDataRepository.changeActive(false);
                   },
                   child: Container(
                     height: 32,
@@ -81,13 +81,13 @@ class _addViewState extends State<AdminView> {
             const SizedBox(
               height: 20,
             ),
-             SingleChildScrollView(
-               child: Column(
+            SingleChildScrollView(
+              child: Column(
                 children: List.generate(10, (index) {
                   return const AdCard();
                 }),
-                           ),
-             ),
+              ),
+            ),
           ],
         ),
       ),
