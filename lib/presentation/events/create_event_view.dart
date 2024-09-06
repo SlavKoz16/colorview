@@ -1,6 +1,5 @@
 import 'package:colorview/data/ad_data_repository.dart';
 import 'package:colorview/model/anounce_model.dart';
-import 'package:colorview/presentation/events/area_events.dart';
 import 'package:colorview/presentation/events/search_sport_object.dart';
 import 'package:colorview/presentation/widgets/custom_textfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:provider/provider.dart';
 
 TextEditingController _nameController = TextEditingController();
 TextEditingController _priceController = TextEditingController();
-TextEditingController _orgContactController = TextEditingController();
+TextEditingController _sportObjectIDController = TextEditingController();
 TextEditingController _descriptionController = TextEditingController();
 TextEditingController _urlController = TextEditingController();
 FocusNode _focusNode = FocusNode();
@@ -27,7 +26,7 @@ class _CreateEventViewState extends State<CreateEventView> {
   @override
   void initState() {
     super.initState();
-    _orgContactController.text = widget.selectedArea;
+    _sportObjectIDController.text = widget.selectedArea;
   }
 
   void _navigateToAreaSelection() async {
@@ -36,7 +35,9 @@ class _CreateEventViewState extends State<CreateEventView> {
       MaterialPageRoute(builder: (context) => SearchSportObject()),
     );
     if (selectedArea != null && selectedArea is String) {
-      _orgContactController.text = selectedArea;
+      setState(() {
+        _sportObjectIDController.text = selectedArea;
+      });
     }
   }
 
@@ -45,7 +46,6 @@ class _CreateEventViewState extends State<CreateEventView> {
     final controller = Provider.of<AdDataRepository>(context);
     return GestureDetector(
       onTap: () {
-        _focusNode.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(),
@@ -87,9 +87,9 @@ class _CreateEventViewState extends State<CreateEventView> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  _orgContactController.text.isEmpty
+                                  _sportObjectIDController.text.isEmpty
                                       ? 'Выбор площадки'
-                                      : _orgContactController.text,
+                                      : _sportObjectIDController.text,
                                   style: const TextStyle(
                                       color: Colors.grey, fontSize: 15),
                                 ),
@@ -183,7 +183,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                           child: Text(
                             controller.dateEnd != ''
                                 ? '${controller.dateEnd.toString().substring(0, 10)} ${controller.dateEnd.toString().substring(11, 16)}'
-                                : 'Дата и время начала',
+                                : 'Дата и время конца',
                           ),
                         ),
                       ),
@@ -244,7 +244,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                           description: _descriptionController.text,
                           end: controller.dateEnd,
                           isArchive: false,
-                          orgContact: _orgContactController.text,
+                          orgContact: '+7-926-555-2233 Сергей',
                           publish: true,
                           senderId: '6644ab73d43ce8386de63a70',
                           sportObjectId: '646a4c505e3895f45a56670d',
@@ -261,7 +261,7 @@ class _CreateEventViewState extends State<CreateEventView> {
                         child: Text('Создать'),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
